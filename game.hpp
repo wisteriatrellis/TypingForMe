@@ -8,9 +8,11 @@ class Game {
 public:
   Game();
   void inputQuestions();
-  void print();
+  void loop();
 private:
   Model model;
+  void inputUserKeys(std::string question);
+  void moveCursor(int argY, int argX) const;
 };
 
 
