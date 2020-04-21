@@ -7,7 +7,7 @@
 class Game {
 public:
   Game();
-  void inputQuestions();
+  void inputQuestions(std::string command);
   void loop();
 private:
   Model model;

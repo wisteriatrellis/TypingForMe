@@ -12,7 +12,8 @@ Game::Game() {
 }
 
 
-void Game::inputQuestions() {
+void Game::inputQuestions(std::string command) {
+  system(command.c_str());
   std::ifstream file;
   std::string str;
 
@@ -30,7 +31,7 @@ void Game::inputQuestions() {
 void Game::loop() {
   initscr();
   noecho();
-  auto questions = model.getQuestions();
+  auto questions = model.getRandomQuestions();
   for (auto question : questions) {
     move(0, 0);
     clrtoeol();
