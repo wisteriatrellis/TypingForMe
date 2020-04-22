@@ -4,6 +4,12 @@
 #include <random>
 
 
+Model::Model() {
+  inputKeyCount = 0;
+  questionsCharCount = 0;
+}
+
+
 void Model::addQuestions(std::string question) {
   questions.push_back(question);
 }
@@ -30,5 +36,21 @@ std::vector<std::string> Model::getRandomQuestions() const {
     randomQuestions[i] = tmp;
   }
   return randomQuestions;
+}
+
+
+void Model::incrementInputKeyCount() {
+  ++inputKeyCount;
+}
+
+
+void Model::incrementQuestionsCharCount() {
+  ++questionsCharCount;
+}
+
+
+void Model::init() {
+  inputKeyCount = 0;
+  questionsCharCount = 0;
 }
 

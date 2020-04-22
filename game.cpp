@@ -41,6 +41,13 @@ void Game::loop() {
     this->inputUserKeys(question);
   }
   endwin();
+  
+  // ここらへんはresult画面(Result)クラスに移す予定
+  int questionsCharCount = model.getQuestionsCharCount();
+  int inputKeyCount = model.getInputKeyCount();
+  float precision = questionsCharCount * 100 / static_cast<double> (inputKeyCount);
+
+  std::cout << "precision: " << precision << "%" << std::endl;
 }
 
 
@@ -53,10 +60,12 @@ void Game::inputUserKeys(std::string question) {
       ++charPos;
       insch(ch);
       moveCursor(0, 1);
+      model.incrementQuestionsCharCount();
     } else {
       flash();
       beep();
     }
+    model.incrementInputKeyCount();
     refresh();
   }
 }
