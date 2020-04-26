@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <iostream>
+#include <chrono>
 
 
 Game::Game() {
@@ -32,6 +33,8 @@ void Game::loop() {
   initscr();
   noecho();
   auto questions = model.getRandomQuestions();
+  auto start = std::chrono::high_resolution_clock::now();
+
   for (auto question : questions) {
     move(0, 0);
     clrtoeol();
@@ -40,14 +43,20 @@ void Game::loop() {
     clrtoeol();
     this->inputUserKeys(question);
   }
+  
+  auto end = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
   endwin();
   
   // ここらへんはresult画面(Result)クラスに移す予定
   int questionsCharCount = model.getQuestionsCharCount();
   int inputKeyCount = model.getInputKeyCount();
-  float precision = questionsCharCount * 100 / static_cast<double> (inputKeyCount);
+  float precision = questionsCharCount * 100 / static_cast<float>(inputKeyCount);
+  float wpm = questionsCharCount * 60 / static_cast<float>(duration);
 
   std::cout << "precision: " << precision << "%" << std::endl;
+  std::cout << "WPM: " << wpm << std::endl;
+  std::cout << "Time: " << duration << "s" << std::endl;
 }
 
 
