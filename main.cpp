@@ -1,5 +1,7 @@
+#include "model.hpp"
 #include "game.hpp"
 #include <string.h>
+#include <memory>
 
 
 int main(int argc, char* argv[]) {
@@ -12,7 +14,9 @@ int main(int argc, char* argv[]) {
   }
   modifierPart += "\"";
        
-  Game game = Game();
+
+  std::shared_ptr<Model> pModel(new Model());
+  Game game = Game(pModel);
   game.inputQuestions(mainPart + modifierPart + outputPart);
   game.loop();
 

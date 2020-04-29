@@ -6,10 +6,11 @@
 #include <ncurses.h>
 #include <iostream>
 #include <chrono>
+#include <memory>
 
 
-Game::Game() {
-  model = Model();
+Game::Game(std::shared_ptr<Model> pModel) {
+  this->pModel = pModel; 
 }
 
 
@@ -23,7 +24,7 @@ void Game::inputQuestions(std::string command) {
     exit(EXIT_FAILURE);
   }
   while (getline(file, str)) {
-    model.addQuestions(str);
+    pModel->addQuestions(str);
   }
   file.close();
 }
@@ -32,7 +33,7 @@ void Game::inputQuestions(std::string command) {
 void Game::loop() {
   initscr();
   noecho();
-  auto questions = model.getRandomQuestions();
+  auto questions = pModel->getRandomQuestions();
   auto start = std::chrono::high_resolution_clock::now();
 
   for (auto question : questions) {
@@ -49,8 +50,8 @@ void Game::loop() {
   endwin();
   
   // ここらへんはresult画面(Result)クラスに移す予定
-  int questionsCharCount = model.getQuestionsCharCount();
-  int inputKeyCount = model.getInputKeyCount();
+  int questionsCharCount = pModel->getQuestionsCharCount();
+  int inputKeyCount = pModel->getInputKeyCount();
   float precision = questionsCharCount * 100 / static_cast<float>(inputKeyCount);
   float wpm = questionsCharCount * 60 / static_cast<float>(duration);
 
@@ -69,12 +70,12 @@ void Game::inputUserKeys(std::string question) {
       ++charPos;
       insch(ch);
       moveCursor(0, 1);
-      model.incrementQuestionsCharCount();
+      pModel->incrementQuestionsCharCount();
     } else {
       flash();
       beep();
     }
-    model.incrementInputKeyCount();
+    pModel->incrementInputKeyCount();
     refresh();
   }
 }
