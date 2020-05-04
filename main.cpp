@@ -1,5 +1,6 @@
 #include "model.hpp"
 #include "game.hpp"
+#include "result.hpp"
 #include <string.h>
 #include <memory>
 
@@ -18,7 +19,9 @@ int main(int argc, char* argv[]) {
   std::shared_ptr<Model> pModel(new Model());
   Game game = Game(pModel);
   game.inputQuestions(mainPart + modifierPart + outputPart);
-  game.loop();
+  game.run();
+  Result result = Result(pModel);
+  result.run();
 
   return 0;
 }

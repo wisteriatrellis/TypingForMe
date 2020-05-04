@@ -10,7 +10,7 @@ class Game {
 public:
   Game(std::shared_ptr<Model> pModel);
   void inputQuestions(std::string command);
-  void loop();
+  void run();
 private:
   std::shared_ptr<Model> pModel;
   void inputUserKeys(std::string question);

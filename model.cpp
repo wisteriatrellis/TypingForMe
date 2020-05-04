@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <random>
+#include <chrono>
 
 
 Model::Model() {
@@ -36,6 +37,16 @@ std::vector<std::string> Model::getRandomQuestions() const {
     randomQuestions[i] = tmp;
   }
   return randomQuestions;
+}
+
+
+void Model::setStartTime() {
+  start = std::chrono::high_resolution_clock::now();
+}
+
+
+void Model::setEndTime() {
+  end = std::chrono::high_resolution_clock::now();
 }
 
 

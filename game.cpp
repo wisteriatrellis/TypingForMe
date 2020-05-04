@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <iostream>
-#include <chrono>
 #include <memory>
 
 
@@ -30,11 +29,11 @@ void Game::inputQuestions(std::string command) {
 }
 
 
-void Game::loop() {
+void Game::run() {
   initscr();
   noecho();
   auto questions = pModel->getRandomQuestions();
-  auto start = std::chrono::high_resolution_clock::now();
+  pModel->setStartTime();
 
   for (auto question : questions) {
     move(0, 0);
@@ -45,19 +44,8 @@ void Game::loop() {
     this->inputUserKeys(question);
   }
   
-  auto end = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+  pModel->setEndTime();
   endwin();
-  
-  // ここらへんはresult画面(Result)クラスに移す予定
-  int questionsCharCount = pModel->getQuestionsCharCount();
-  int inputKeyCount = pModel->getInputKeyCount();
-  float precision = questionsCharCount * 100 / static_cast<float>(inputKeyCount);
-  float wpm = questionsCharCount * 60 / static_cast<float>(duration);
-
-  std::cout << "precision: " << precision << "%" << std::endl;
-  std::cout << "WPM: " << wpm << std::endl;
-  std::cout << "Time: " << duration << "s" << std::endl;
 }
 
 

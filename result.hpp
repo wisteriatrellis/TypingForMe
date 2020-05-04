@@ -8,7 +8,7 @@
 
 class Result {
 public:
-  Result();
+  Result(std::shared_ptr<Model> pModel);
   void run();
 private:
   std::shared_ptr<Model> pModel;
