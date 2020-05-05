@@ -2,11 +2,12 @@
 #define RESULT_H
 
 
+#include "scene.hpp"
 #include "model.hpp"
 #include <memory>
 
 
-class Result {
+class Result : public Scene {
 public:
   Result(std::shared_ptr<Model> pModel);
   void run();

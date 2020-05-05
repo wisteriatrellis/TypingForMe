@@ -2,11 +2,12 @@
 #define GAME_H
 
 
+#include "scene.hpp"
 #include "model.hpp"
 #include <memory>
 
 
-class Game {
+class Game : public Scene {
 public:
   Game(std::shared_ptr<Model> pModel);
   void inputQuestions(std::string command);
